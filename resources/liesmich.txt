@@ -1,0 +1,15 @@
+ROMSetMerger
+============
+
+~~~ Deutsch ~~~
+Ein kleines Tool das beim verwalten von TOSEC basierten ROMSets hilft.
+Für weitere Informationen, siehe "readme.txt" im Projektarchiv.
+
+
+~~~ English ~~~
+A small util to help organizing TOSEC based ROMSets.
+For more information see "readme.txt" inside projectarchive.
+
+
+Copyright 2016
+_-pYRo_-

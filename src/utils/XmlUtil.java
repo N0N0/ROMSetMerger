@@ -6,7 +6,6 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.stream.Format;
 
-import xml.Datafile;
 
 /**
  * Encapsulates methods that do XML stuff :)

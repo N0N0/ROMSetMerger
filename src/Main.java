@@ -6,31 +6,38 @@ public class Main {
 
 	public static void main(String args[]){
 		
-		Datafile datafile = null;
-		XmlUtil xmlUtil = new XmlUtil();
+		if(args != null && args.length > 0){
 		
-		String path = "K:/zeugs/no-intro-dats/TOSEC - DAT Pack - Complete (2304) (TOSEC-v2016-01-03)/TOSEC/Commodore Amiga - Games - [ADF] (TOSEC-v2015-12-28_CM).dat";
-
-		datafile = (Datafile) xmlUtil.getXml(Datafile.class, path);
-		
-		if(datafile != null && datafile.getHeader() !=null) {
-			System.out.println("Got a DAT including " + datafile.getGames().size() + " games.");
+			Datafile datafile = null;
+			XmlUtil xmlUtil = new XmlUtil();
 			
-			Datafile merged = new RomSetMerger().getMergedDat(datafile);
+			String path = args[0];
+	
+			datafile = (Datafile) xmlUtil.getXml(Datafile.class, path);
 			
-			if(merged != null){
-				System.out.println("Merged DAT has " + merged.getGames().size() + " games.");
+			if(datafile != null && datafile.getHeader() !=null) {
+				System.out.println("Got a DAT including " + datafile.getGames().size() + " games.");
 				
-				xmlUtil.writeXmlToDisc(Datafile.class, merged, path + "_merged");
+				Datafile merged = new RomSetMerger().getMergedDat(datafile);
+				
+				if(merged != null){
+					System.out.println("Merged DAT has " + merged.getGames().size() + " games.");
+					
+					System.out.println("Writing merged DAT as '" + path + "_merged'.");
+					System.out.println("Please be patient...");
+					xmlUtil.writeXmlToDisc(Datafile.class, merged, path + "_merged");
+					System.out.println("Writing to disk done, have fun :)");
+					
+				}else{
+					System.out.print("Merging didn't work.");
+				}
 				
 			}else{
-				System.out.print("Merging didn't work.");
+				System.out.println("No XML loaded.");
 			}
-			
 		}else{
-			System.out.println("No XML loaded.");
+			System.out.println("usage: java -jar ROMSetMerger.jar \"C:/DataSets/Commodore Amiga.dat\"");
 		}
-
 	}
 	
 }

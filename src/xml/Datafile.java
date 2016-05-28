@@ -1,5 +1,6 @@
 package xml;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.simpleframework.xml.Attribute;
@@ -25,5 +26,5 @@ public class Datafile {
 	private Header header;
 	
 	@ElementList(inline=true,required=false, name="game")
-	private List<Game> games;
+	private List<Game> games = new ArrayList<>();
 }

@@ -1,5 +1,6 @@
 package xml.datafile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.simpleframework.xml.Attribute;
@@ -57,13 +58,13 @@ public class Game {
 	private Biosset biosset;
 	
 	@ElementList(inline=true, required=false, name="rom")
-	private List<Rom> roms;
+	private List<Rom> roms = new ArrayList<>();
 	
 	@ElementList(inline=true, required=false)
-	private List<Disk> disk;
+	private List<Disk> disk = new ArrayList<>();
 	
 	@ElementList(inline=true, required=false)
-	private List<Sample> sample;
+	private List<Sample> sample = new ArrayList<>();
 	
 	@ElementList(required=false)
 	private Archive archive;

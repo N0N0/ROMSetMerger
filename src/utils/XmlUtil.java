@@ -36,7 +36,7 @@ public class XmlUtil {
 		try{
 			Format format = new Format("<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE datafile PUBLIC \"-//Logiqx//DTD ROM Management Datafile//EN\" \"http://www.logiqx.com/Dats/datafile.dtd\">");
 			Serializer serializer = new Persister(format);
-			if(!StringUtil.isEmpty(path)){			
+			if(!StringUtil.isEmpty(path)){
 				File destination = new File(path);
 				serializer.write(xml, destination);
 				result = true;

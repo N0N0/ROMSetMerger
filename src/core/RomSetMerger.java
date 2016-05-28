@@ -29,7 +29,6 @@ public class RomSetMerger {
 					// first one only
 					lastBaseName = this.getBaseName(current.getName());
 					mergedGame = this.cloneCoreGame(current, lastBaseName);
-					mergedGame.getRoms().addAll(current.getRoms());
 				}else{
 					currentBaseName = this.getBaseName(current.getName());
 				}
@@ -75,6 +74,7 @@ public class RomSetMerger {
 		result.setDescription(baseName);
 		result.setName(baseName);
 		result.setYear(game.getYear());
+		result.getRoms().addAll(game.getRoms());
 		return result;
 	}
 	

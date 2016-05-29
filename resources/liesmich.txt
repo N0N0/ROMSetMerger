@@ -1,9 +1,9 @@
-ROMSetMerger
+﻿ROMSetMerger
 ============
 
 ~~~ Deutsch ~~~
 Ein kleines Tool das beim verwalten von TOSEC basierten ROMSets hilft.
-F�r weitere Informationen, siehe "readme.txt" im Projektarchiv.
+Für weitere Informationen, siehe "readme.txt" im Projektarchiv.
 
 
 ~~~ English ~~~

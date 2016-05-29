@@ -1,4 +1,4 @@
-ROMSetMerger 0.10
+﻿ROMSetMerger 0.10
 =================
 
 A small util to help organizing TOSEC based ROMSets.

@@ -31,9 +31,8 @@ public class Main {
 					System.out.println("Merged DAT has " + merged.getGames().size() + " games.");
 					
 					System.out.println("Writing merged DAT as '" + path + "_merged'.");
-					System.out.println("Please be patient...");
 					xmlUtil.writeXmlToDisc(Datafile.class, merged, path + "_merged");
-					System.out.println("Writing to disk done, have fun :)");
+					System.out.println("All done, have fun :)");
 					
 				}else{
 					System.out.print("Merging didn't work.");

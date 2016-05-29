@@ -30,9 +30,9 @@ public class Main {
 				if(merged != null){
 					System.out.println("Merged DAT has " + merged.getGames().size() + " games.");
 					
-					System.out.println("Writing merged DAT as '" + path + "_merged'.");
+					
 					xmlUtil.writeXmlToDisc(Datafile.class, merged, path + "_merged");
-					System.out.println("All done, have fun :)");
+					System.out.println("Merged DAT saved as '" + path + "_merged'.");
 					
 				}else{
 					System.out.print("Merging didn't work.");

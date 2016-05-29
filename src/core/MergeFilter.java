@@ -50,7 +50,7 @@ public class MergeFilter {
 		}
 		
 		if(this.excludeTrainers){
-			result += orString + "((\\[t\\])|(\\[t\\d?\\d?\\])|(\\[t\\d?\\d?\\s.*\\]))";
+			result += orString + "((\\[t\\])|(\\[t\\+?\\d?\\d?\\])|(\\[t\\+?\\d?\\d?\\s.*\\]))";
 			orString = "|";
 		}
 		

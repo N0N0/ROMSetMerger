@@ -14,8 +14,10 @@ import xml.datafile.Header;
 
 @Data
 @Root
-public class Datafile {
+public class Datafile implements XmlFile{
 
+	private final String prologue = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE datafile PUBLIC \"-//Logiqx//DTD ROM Management Datafile//EN\" \"http://www.logiqx.com/Dats/datafile.dtd\">";
+	
 	@Attribute(required=false)
 	private String build;
 	

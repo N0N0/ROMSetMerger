@@ -1,4 +1,4 @@
-import core.RomSetMerger;
+package core;
 import utils.XmlUtil;
 import xml.Datafile;
 
@@ -6,19 +6,26 @@ public class Main {
 
 	public static void main(String args[]){
 		
+		MergeFilter mergeFilter = new MergeFilter();
+		mergeFilter.setExcludeAlternativeDumps(true);
+		mergeFilter.setExcludeBadDumps(true);
+		mergeFilter.setExcludeViruses(true);
+		mergeFilter.setExcludeTrainers(false);
+		
 		if(args != null && args.length > 0){
 		
 			Datafile datafile = null;
 			XmlUtil xmlUtil = new XmlUtil();
 			
 			String path = args[0];
-	
+			
+
 			datafile = (Datafile) xmlUtil.getXml(Datafile.class, path);
 			
 			if(datafile != null && datafile.getHeader() !=null) {
 				System.out.println("Got a DAT including " + datafile.getGames().size() + " games.");
 				
-				Datafile merged = new RomSetMerger().getMergedDat(datafile);
+				Datafile merged = new RomSetMerger().getMergedDat(datafile, mergeFilter);
 				
 				if(merged != null){
 					System.out.println("Merged DAT has " + merged.getGames().size() + " games.");

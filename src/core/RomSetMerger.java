@@ -1,13 +1,17 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import utils.StringUtil;
 import xml.Datafile;
 import xml.datafile.Game;
+import xml.datafile.game.Rom;
 
 public class RomSetMerger {
 
 	
-	public Datafile getMergedDat(Datafile datafile){
+	public Datafile getMergedDat(Datafile datafile, MergeFilter mergeFilter){
 		Datafile result = null;
 		
 		if(datafile != null && datafile.getGames().size() > 0){
@@ -28,7 +32,7 @@ public class RomSetMerger {
 				if(i==0){
 					// first one only
 					lastBaseName = this.getBaseName(current.getName());
-					mergedGame = this.cloneCoreGame(current, lastBaseName);
+					mergedGame = this.cloneCoreGame(current, lastBaseName, mergeFilter);
 				}else{
 					currentBaseName = this.getBaseName(current.getName());
 				}
@@ -36,14 +40,20 @@ public class RomSetMerger {
 				if(!StringUtil.isEmpty(currentBaseName)){
 					if(lastBaseName.equals(currentBaseName)){
 					//	System.out.println("match for: '" + lastBaseName + "'");
-						mergedGame.getRoms().addAll(current.getRoms());
+						if(mergeFilter != null){
+							// filter? check if this version is wanted at all
+							mergedGame.getRoms().addAll(this.getFilteredRoms(mergeFilter, current.getRoms()));
+						}else{
+							// no filter? take take all
+							mergedGame.getRoms().addAll(current.getRoms());		
+						}
 					}else{
 						// add last game to merged set
 						result.getGames().add(mergedGame);
 						
 						// make current game the new mergedGame
 						lastBaseName = currentBaseName;
-						mergedGame = this.cloneCoreGame(current, currentBaseName);
+						mergedGame = this.cloneCoreGame(current, currentBaseName, mergeFilter);
 					}
 				}
 				
@@ -60,7 +70,28 @@ public class RomSetMerger {
 		
 		return result;
 	}
+
+	/**
+	 * @param mergeFilter
+	 * @param roms list of roms that wont match mergeFilter criteria
+	 * @return
+	 */
+	private List<Rom> getFilteredRoms(MergeFilter mergeFilter, List<Rom> roms){
+		List<Rom> result = new ArrayList<>();
+		
+		for(Rom rom : roms){	
+			if(!mergeFilter.matchesFilter(rom.getName())){
+				result.add(rom);
+			}
+		}
+		
+		return result;
+	}
 	
+	/**
+	 * @param name
+	 * @return basename (e.g. name of given game up till 1st match of string: " (" (aprox year of release)
+	 */
 	private String getBaseName(String name){
 		if(!StringUtil.isEmpty(name)){
 			return name.substring(0, name.indexOf(" ("));
@@ -69,15 +100,30 @@ public class RomSetMerger {
 		}
 	}
 	
-	private Game cloneCoreGame(Game game, String baseName){
+	/**
+	 * copies basic data of given game into new game instance
+	 * @param game
+	 * @param baseName
+	 * @return
+	 */
+	private Game cloneCoreGame(Game game, String baseName, MergeFilter mergeFilter){
 		Game result = new Game();
 		result.setDescription(baseName);
 		result.setName(baseName);
 		result.setYear(game.getYear());
-		result.getRoms().addAll(game.getRoms());
+		if(mergeFilter != null){
+			result.getRoms().addAll(this.getFilteredRoms(mergeFilter, game.getRoms()));
+		}else{
+			result.getRoms().addAll(game.getRoms());
+		}
 		return result;
 	}
 	
+	/**
+	 * copies basic data of given DAT into new DAT instance
+	 * @param datafile
+	 * @return
+	 */
 	private Datafile cloneCoreDat(Datafile datafile){
 		Datafile result = new Datafile();
 		result.setBuild(datafile.getBuild());

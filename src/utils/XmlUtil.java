@@ -6,6 +6,8 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.stream.Format;
 
+import xml.XmlFile;
+
 
 /**
  * Encapsulates methods that do XML stuff :)
@@ -30,11 +32,10 @@ public class XmlUtil {
 		return result;
 	}
 	
-	public boolean writeXmlToDisc(Class<?> type, Object xml, String path){
+	public boolean writeXmlToDisc(Class<?> type, XmlFile xml, String path){
 		boolean result = false;
 		try{
-			Format format = new Format("<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE datafile PUBLIC \"-//Logiqx//DTD ROM Management Datafile//EN\" \"http://www.logiqx.com/Dats/datafile.dtd\">");
-			Serializer serializer = new Persister(format);
+			Serializer serializer = new Persister(new Format(xml.getPrologue()));
 			if(!StringUtil.isEmpty(path)){
 				File destination = new File(path);
 				serializer.write(xml, destination);

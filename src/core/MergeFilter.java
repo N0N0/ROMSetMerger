@@ -14,6 +14,8 @@ public class MergeFilter {
 
 	private boolean excludeBadDumps = false;
 	private boolean excludeAlternativeDumps = false;
+	private boolean excludeHackedDumps = false;
+	private boolean excludeModifiedDumps = false;
 	private boolean excludeTrainers = false;
 	private boolean excludeViruses = false;
 	
@@ -46,6 +48,16 @@ public class MergeFilter {
 		
 		if(this.excludeAlternativeDumps){
 			result += orString + "((\\[a\\])|(\\[a\\d?\\d?\\])|(\\[a\\d?\\d?\\s.*\\]))";
+			orString = "|";
+		}
+		
+		if(this.excludeHackedDumps){
+			result += orString + "((\\[h\\])|(\\[h\\d?\\d?\\])|(\\[h\\d?\\d?\\s.*\\]))";
+			orString = "|";
+		}
+		
+		if(this.excludeModifiedDumps){
+			result += orString + "((\\[m\\])|(\\[m\\d?\\d?\\])|(\\[m\\d?\\d?\\s.*\\]))";
 			orString = "|";
 		}
 		

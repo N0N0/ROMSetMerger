@@ -1,18 +1,28 @@
-﻿ROMSetMerger 0.10
+﻿ROMSetMerger 0.20
 =================
-
 A small util to help organizing TOSEC based ROMSets.
-
 It will merge all corresponding Versions of a game into one, while preserving filenames.
 
-Usage:
-	java -jar ROMSetMerger-X.XX.jar "[FULL PATH to your DAT]"
 
-The result will be stored under [FULL PATH to your DAT]_merged, e.g. The result of "C:/Datasets/Fantasysystem.dat" will be stored under "C:/Datasets/Fantasysystem.dat_merged".
+Available Parameters:
+        -f, --datafile = Full qualified pathname of the DAT file to cleanup.
+        -an, --alternate = ROMs marked as alternative version [a] will be filtered.
+        -bn, --bad = ROMs marked as bad dump [b] will be filtered.
+        -hn, --hack = ROMs marked as hacked [h] will be filtered.
+        -mn, --modified = ROMs marked as modified [m] will be filtered.
+        -tn, --trainer = ROMs marked as trained [t] will be filtered.
+        -vn, --virus = ROMs marked as virus infected [v] will be filtered.
 
-Please keep in mind that this util has rudimentary error handling only so don't use backslash (\) in path - if you have to, use em doubled (\\) and expect errors on exotic DATs.
+Usage: java -jar ROMSetMerger.jar -f /home/vintage.DAT -bn
 
-Also this tool won't recognize DATs with <machine> instead of <game>-Tags - they are currently produced by clmamepro64's Dir2Dat option.
+
+
+The result will be stored under "[FULL PATH to your DAT]_merged.dat", e.g. The result of "C:/Datasets/Fantasysystem.dat" will be stored under "C:/Datasets/Fantasysystem_merged.dat".
+
+Please keep in mind that this util is quite untested yet, so don't blame me if it accidently does you any harm.
+
+
+Also this tool won't find any games in DATs with <machine> instead of <game>-Tags - they are currently produced by clmamepro64's Dir2Dat option.
 This is intended because <machine>-Tag is no part of "ROM Management Datafile" (see http://www.logiqx.com/Dats/datafile.dtd).
 
 

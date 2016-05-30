@@ -1,4 +1,13 @@
 package core;
+import java.util.List;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.ParseException;
+
+import core.cli.Parameters;
 import utils.XmlUtil;
 import xml.Datafile;
 
@@ -6,44 +15,101 @@ public class Main {
 
 	public static void main(String args[]){
 		
-		MergeFilter mergeFilter = new MergeFilter();
-		mergeFilter.setExcludeAlternativeDumps(true);
-		mergeFilter.setExcludeBadDumps(true);
-		mergeFilter.setExcludeViruses(true);
-		mergeFilter.setExcludeTrainers(false);
+		System.out.println("ROMSetMerger v0.20\n");
 		
-		if(args != null && args.length > 0){
-		
-			Datafile datafile = null;
-			XmlUtil xmlUtil = new XmlUtil();
+		CommandLineParser parser = new DefaultParser();
+		try {
+			Parameters parameters = new Parameters();
+			CommandLine cmd = parser.parse(new Parameters(), args);
 			
-			String path = args[0];
-			
+			if(cmd.hasOption(Parameters.PARAM_HELP)){
+				printHelp(parameters);
+			}else if(cmd.hasOption(Parameters.PARAM_DATAFILE)){
+				String path = cmd.getOptionValue(Parameters.PARAM_DATAFILE);
+				
+				if(path.length() > 0){
+					
+					XmlUtil xmlUtil = new XmlUtil();
+					Datafile datafile = (Datafile) xmlUtil.getXml(Datafile.class, path);
 
-			datafile = (Datafile) xmlUtil.getXml(Datafile.class, path);
-			
-			if(datafile != null && datafile.getHeader() !=null) {
-				System.out.println("Got a DAT including " + datafile.getGames().size() + " games.");
-				
-				Datafile merged = new RomSetMerger().getMergedDat(datafile, mergeFilter);
-				
-				if(merged != null){
-					System.out.println("Merged DAT has " + merged.getGames().size() + " games.");
 					
+					MergeFilter mergeFilter = null;
+					if(hasAnyOption(cmd, Parameters.getFilterParamsAsList())){
+						mergeFilter = new MergeFilter();
+						mergeFilter.setExcludeAlternativeDumps(cmd.hasOption(Parameters.PARAM_FILTER_ALTERNATE));
+						mergeFilter.setExcludeBadDumps(cmd.hasOption(Parameters.PARAM_FILTER_BAD));
+						mergeFilter.setExcludeHackedDumps(cmd.hasOption(Parameters.PARAM_FILTER_HACK));
+						mergeFilter.setExcludeModifiedDumps(cmd.hasOption(Parameters.PARAM_FILTER_MODIFIED));
+						mergeFilter.setExcludeTrainers(cmd.hasOption(Parameters.PARAM_FILTER_TRAINER));
+						mergeFilter.setExcludeViruses(cmd.hasOption(Parameters.PARAM_FILTER_VIRUS));
+						
+					}
 					
-					xmlUtil.writeXmlToDisc(Datafile.class, merged, path + "_merged");
-					System.out.println("Merged DAT saved as '" + path + "_merged'.");
+					if(datafile != null && datafile.getHeader() !=null) {
+						System.out.println("Got a DAT including " + datafile.getGames().size() + " games.");
+						
+						Datafile merged = new RomSetMerger().getMergedDat(datafile, mergeFilter);
+						
+						if(merged != null){
+							System.out.println("Merged DAT has " + merged.getGames().size() + " games.");
+							
+							String destinationPath = getDestinationPath(path);
+							
+							xmlUtil.writeXmlToDisc(Datafile.class, merged, destinationPath);
+							System.out.println("Merged DAT saved as '" +destinationPath + "'.");
+							
+						}else{
+							System.out.print("Merging didn't work.");
+						}
+						
+					}else{
+						System.out.println("No XML loaded.");
+					}
 					
 				}else{
-					System.out.print("Merging didn't work.");
+					printHelp(parameters);
 				}
 				
 			}else{
-				System.out.println("No XML loaded.");
+				printHelp(parameters);
 			}
-		}else{
-			System.out.println("usage: java -jar ROMSetMerger.jar \"C:/DataSets/Commodore Amiga.dat\"");
+			
+			
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 	}
+	
+	
+	private static void printHelp(Parameters parameters){
+		System.out.println(parameters.getOption(Parameters.PARAM_HELP).getDescription());
+	}
+	
+	private static String getDestinationPath(String sourcePath){
+		String destinationPath = sourcePath;
+		int extensionBegin = sourcePath.lastIndexOf(".");
+		
+		if(extensionBegin == sourcePath.length()-4){
+			destinationPath = sourcePath.substring(0, extensionBegin );
+		}
+		
+		destinationPath += "_merged.dat";
+		
+		return destinationPath;
+		
+	}
+	
+	private static boolean hasAnyOption(CommandLine cmd, List<String> searchOptions){
+		if(searchOptions != null && searchOptions.size() > 0){
+			for(Option option : cmd.getOptions()){
+				if(searchOptions.contains(option.getLongOpt())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	
 }

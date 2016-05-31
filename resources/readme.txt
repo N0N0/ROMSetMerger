@@ -13,8 +13,8 @@ Available Parameters:
         -tn, --trainer = ROMs marked as trained [t] will be filtered.
         -vn, --virus = ROMs marked as virus infected [v] will be filtered.
 
-Usage: java -jar ROMSetMerger.jar -f /home/vintage.DAT -bn
-
+Usage: java -jar ROMSetMerger.jar -f /home/vintage.DAT -bn -vn
+This will shorten vintag.DAT while removing all files marked as bad dump [b] or virus infected [v].
 
 
 The result will be stored under "[FULL PATH to your DAT]_merged.dat", e.g. The result of "C:/Datasets/Fantasysystem.dat" will be stored under "C:/Datasets/Fantasysystem_merged.dat".

@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import lombok.Data;
+import utils.StringUtil;
 
 /**
  * UtilityClass to store status of filters for merge process (eg. exclude [b] tags)
@@ -18,6 +19,8 @@ public class MergeFilter {
 	private boolean excludeModifiedDumps = false;
 	private boolean excludeTrainers = false;
 	private boolean excludeViruses = false;
+	
+	private Pattern customRegex = null;
 	
 	/**
 	 * @param name (filename) to check against the filter
@@ -68,6 +71,11 @@ public class MergeFilter {
 		
 		if(this.excludeViruses){
 			result += orString + "((\\[v\\])|(\\[v\\d?\\d?\\])|(\\[v\\d?\\d?\\s.*\\]))";
+			orString = "|";
+		}
+		
+		if(customRegex != null){
+			result += orString + "(" + this.customRegex.pattern() + ")";
 			orString = "|";
 		}
 		

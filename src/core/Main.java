@@ -1,5 +1,6 @@
 package core;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -15,7 +16,7 @@ public class Main {
 
 	public static void main(String args[]){
 		
-		System.out.println("ROMSetMerger v0.20\n");
+		System.out.println("ROMSetMerger v0.21\n");
 		
 		CommandLineParser parser = new DefaultParser();
 		try {
@@ -42,6 +43,11 @@ public class Main {
 						mergeFilter.setExcludeModifiedDumps(cmd.hasOption(Parameters.PARAM_FILTER_MODIFIED));
 						mergeFilter.setExcludeTrainers(cmd.hasOption(Parameters.PARAM_FILTER_TRAINER));
 						mergeFilter.setExcludeViruses(cmd.hasOption(Parameters.PARAM_FILTER_VIRUS));
+						
+						if(cmd.hasOption(Parameters.PARAM_FILTER_REGEX)){
+							mergeFilter.setCustomRegex(Pattern.compile(cmd.getOptionValue(Parameters.PARAM_FILTER_REGEX)));
+							// TODO: catch compile errors and print correct failure to console out
+						}
 						
 					}
 					

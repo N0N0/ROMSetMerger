@@ -48,8 +48,10 @@ public class RomSetMerger {
 							mergedGame.getRoms().addAll(current.getRoms());		
 						}
 					}else{
-						// add last game to merged set
-						result.getGames().add(mergedGame);
+						if(!mergedGame.getRoms().isEmpty()){
+							// add last game to merged set
+							result.getGames().add(mergedGame);
+						}
 						
 						// make current game the new mergedGame
 						lastBaseName = currentBaseName;
@@ -84,7 +86,7 @@ public class RomSetMerger {
 				result.add(rom);
 			}
 		}
-		
+				
 		return result;
 	}
 	

@@ -1,5 +1,5 @@
-﻿ROMSetMerger 0.20
-=================
+﻿ROMSetMerger 0.21a
+==================
 A small util to help organizing TOSEC based ROMSets.
 It will merge all corresponding Versions of a game into one, while preserving filenames.
 
@@ -12,8 +12,9 @@ Available Parameters:
         -mn, --modified = ROMs marked as modified [m] will be filtered.
         -tn, --trainer = ROMs marked as trained [t] will be filtered.
         -vn, --virus = ROMs marked as virus infected [v] will be filtered.
+        -rx, --regex = using to filter by custom regular expression (Java compatible).
 
-Usage: java -jar ROMSetMerger.jar -f /home/vintage.DAT -bn -vn
+Usage: java -jar ROMSetMerger.jar -f /home/vintage.DAT -bn -vn -rx "(supadupa kangaroo)"
 This will shorten vintag.DAT while removing all files marked as bad dump [b] or virus infected [v].
 
 
@@ -28,3 +29,18 @@ This is intended because <machine>-Tag is no part of "ROM Management Datafile" (
 
 Copyright 2016
 _-pYRo_-
+
+
+
+History
+=======
+0.21 (2016-06-13)
+	+	Support for filterign by custom regular expression
+	#	Games without any ROM will be filtered
+
+0.20 (2016-05-29)
+	+	Support for categorized filtering ([b], [a], ...)
+	#	Exported DAT lacked the XML-Prologue thus not being recgnozed by clrmamepro
+
+0.10 (2016-05-28)
+	+	Initial version with ability to merge ROMs of various game variants into a single game/diskset

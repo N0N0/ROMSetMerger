@@ -26,6 +26,7 @@ public class Parameters extends Options{
 	public static final String PARAM_FILTER_TRAINER = "trainer";
 	public static final String PARAM_FILTER_VIRUS = "virus";
 	
+	public static final String PARAM_FILTER_REGEX = "regex";
 	
 	public Parameters(){
 		
@@ -37,8 +38,10 @@ public class Parameters extends Options{
 		this.addOption("mn", PARAM_FILTER_MODIFIED, false, "ROMs marked as modified [m] will be filtered.");
 		this.addOption("tn", PARAM_FILTER_TRAINER, false, "ROMs marked as trained [t] will be filtered.");
 		this.addOption("vn", PARAM_FILTER_VIRUS, false, "ROMs marked as virus infected [v] will be filtered.");
+		
+		this.addOption("rx", PARAM_FILTER_REGEX, true, "Filter ROMs by custom regex pattern (java compatibility required).");
+		
 		this.addOption("h", PARAM_HELP, false, this.getHelpText());
-	
 	}
 	
 	public static List<String> getFilterParamsAsList(){
@@ -50,6 +53,7 @@ public class Parameters extends Options{
 		result.add(PARAM_FILTER_MODIFIED);
 		result.add(PARAM_FILTER_TRAINER);
 		result.add(PARAM_FILTER_VIRUS);
+		result.add(PARAM_FILTER_REGEX);
 		
 		return result;
 	}

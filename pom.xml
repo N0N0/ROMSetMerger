@@ -38,7 +38,7 @@
       						<mainClass>core.Main</mainClass>
       						<manifestEntries>
       							<Main-Class>core.Main</Main-Class>
-      							<Build-Number>0.1</Build-Number>
+      							<Build-Number>${version}</Build-Number>
       						</manifestEntries>
       					</transformer>
       				</transformers>

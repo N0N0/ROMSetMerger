@@ -1,4 +1,4 @@
-﻿ROMSetMerger 0.21a
+﻿ROMSetMerger 0.22a
 ==================
 A small util to help organizing TOSEC based ROMSets.
 It will merge all corresponding Versions of a game into one, while preserving filenames.
@@ -27,13 +27,16 @@ Also this tool won't find any games in DATs with <machine> instead of <game>-Tag
 This is intended because <machine>-Tag is no part of "ROM Management Datafile" (see http://www.logiqx.com/Dats/datafile.dtd).
 
 
-Copyright 2016
+Copyright 2016-2018
 _-pYRo_-
 
 
 
 History
 =======
+0.22 (2018-10-24)
+	+ Support for unsorted Datafiles
+	# Support for merging of Rev(ision) Tag in Gamename (not between parentheses)
 0.21 (2016-06-13)
 	+	Support for filterign by custom regular expression
 	#	Games without any ROM will be filtered

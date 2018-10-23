@@ -11,5 +11,5 @@ A small util to help organizing TOSEC based ROMSets.
 For more information see "readme.txt" inside projectarchive.
 
 
-Copyright 2016
+Copyright 2016-2018
 _-pYRo_-

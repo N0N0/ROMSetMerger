@@ -49,8 +49,17 @@ public class RomSetMerger {
 						}
 					}else{
 						if(!mergedGame.getRoms().isEmpty()){
-							// add last game to merged set
-							result.getGames().add(mergedGame);
+							
+							// check if a previous game is existent with current basename (for unsorted datfiles)
+							Game oldMergedGame = result.getGameByName(mergedGame.getName());
+							if(oldMergedGame != null) {
+								result.getGames().remove(oldMergedGame);
+								oldMergedGame.getRoms().addAll(mergedGame.getRoms());
+								mergedGame = oldMergedGame;
+							} else {
+								// seems to be a new game set
+								result.getGames().add(mergedGame);
+							}
 						}
 						
 						// make current game the new mergedGame

@@ -29,4 +29,16 @@ public class Datafile implements XmlFile{
 	
 	@ElementList(inline=true,required=false, name="game")
 	private List<Game> games = new ArrayList<>();
+	
+	public Game getGameByName(String name) {
+		if(name != null && name.length() > 0) {
+			for(Game game : this.games) {
+				if(game.getName().equals(name)) {
+					return game;
+				}
+			}
+		}
+		
+		return null;
+	}
 }

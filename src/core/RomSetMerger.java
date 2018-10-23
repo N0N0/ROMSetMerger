@@ -44,8 +44,8 @@ public class RomSetMerger {
 							// filter? check if this version is wanted at all
 							mergedGame.getRoms().addAll(this.getFilteredRoms(mergeFilter, current.getRoms()));
 						}else{
-							// no filter? take take all
-							mergedGame.getRoms().addAll(current.getRoms());		
+							// no filter? take all
+							mergedGame.getRoms().addAll(current.getRoms());
 						}
 					}else{
 						if(!mergedGame.getRoms().isEmpty()){
@@ -65,10 +65,7 @@ public class RomSetMerger {
 			if(mergedGame.getRoms().size() > 0 && !result.getGames().contains(mergedGame)){
 				result.getGames().add(mergedGame);
 			}
-
-			
-			
-		}		
+		}
 		
 		return result;
 	}
@@ -81,22 +78,27 @@ public class RomSetMerger {
 	private List<Rom> getFilteredRoms(MergeFilter mergeFilter, List<Rom> roms){
 		List<Rom> result = new ArrayList<>();
 		
-		for(Rom rom : roms){	
+		for(Rom rom : roms){
 			if(!mergeFilter.matchesFilter(rom.getName())){
 				result.add(rom);
 			}
 		}
-				
 		return result;
 	}
 	
 	/**
 	 * @param name
-	 * @return basename (e.g. name of given game up till 1st match of string: " (" (aprox year of release)
+	 * @return basename (e.g. name of given game up till 1st match of string: " (" (aprox year of release) or " Rev" (Revision 0...N) - whatever's first in namestring
 	 */
 	private String getBaseName(String name){
 		if(!StringUtil.isEmpty(name)){
-			return name.substring(0, name.indexOf(" ("));
+			int revPartIndex = name.indexOf(" Rev");
+			int detailPartIndex = name.indexOf(" (");
+			if(revPartIndex >= 0 && revPartIndex < detailPartIndex) {
+				return name.substring(0, revPartIndex);
+			}else {
+				return name.substring(0, detailPartIndex);
+			}
 		}else{
 			return "";
 		}

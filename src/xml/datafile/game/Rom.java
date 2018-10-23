@@ -31,4 +31,7 @@ public class Rom {
 	@Attribute(required=false)
 	private String date;
 	
+	@Attribute(required=false)
+	private String serial;
+	
 }

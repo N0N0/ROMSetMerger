@@ -35,12 +35,12 @@ _-pYRo_-
 History
 =======
 0.22 (2018-10-24)
-	+ Support for unsorted Datafiles
-	# Support for merging of Rev(ision) Tag in Gamename (not between parentheses)
+	+ Support for unsorted Datafilesn parentheses)
 0.21 (2016-06-13)
 	+	Support for filterign by custom regular expression
 	#	Games without any ROM will be filtered
 
+	# Support for merging of Rev(ision) Tag in Gamename (not betwee
 0.20 (2016-05-29)
 	+	Support for categorized filtering ([b], [a], ...)
 	#	Exported DAT lacked the XML-Prologue thus not being recgnozed by clrmamepro

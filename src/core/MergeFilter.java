@@ -4,7 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import lombok.Data;
-import utils.StringUtil;
 
 /**
  * UtilityClass to store status of filters for merge process (eg. exclude [b] tags)

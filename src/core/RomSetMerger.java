@@ -101,7 +101,7 @@ public class RomSetMerger {
 	 */
 	private String getBaseName(String name){
 		if(!StringUtil.isEmpty(name)){
-			int revPartIndex = name.indexOf(" Rev");
+			int revPartIndex = name.indexOf(" Rev ");
 			int detailPartIndex = name.indexOf(" (");
 			if(revPartIndex >= 0 && revPartIndex < detailPartIndex) {
 				return name.substring(0, revPartIndex);

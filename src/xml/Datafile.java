@@ -30,7 +30,7 @@ public class Datafile implements XmlFile{
 	@ElementList(inline=true,required=false, name="game")
 	private List<Game> games = new ArrayList<>();
 	
-	public Game getGameByName(String name) {
+	private Game getGameByName(String name) {
 		if(name != null && name.length() > 0) {
 			for(Game game : this.games) {
 				if(game.getName().equals(name)) {
@@ -38,7 +38,21 @@ public class Datafile implements XmlFile{
 				}
 			}
 		}
-		
 		return null;
+	}
+	
+	/**
+	 * Checks if given baseName is already knwon, if so roms of new game will be added to existing one. If not newGame will be added as is.
+	 * @param newGame
+	 * @param baseName
+	 */
+	public void mergeGame(Game newGame, String baseName) {
+		Game existingGame = this.getGameByName(baseName);
+		if(existingGame != null) {
+			existingGame.getRoms().addAll(newGame.getRoms());
+		} else {
+			this.games.add(newGame);
+		}
+		
 	}
 }

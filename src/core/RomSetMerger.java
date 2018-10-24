@@ -18,64 +18,14 @@ public class RomSetMerger {
 
 			result = this.cloneCoreDat(datafile);
 			
-			
-			String lastBaseName = "";
-			String currentBaseName = "";
-			
-			Game mergedGame = new Game();
-			
-			// work each game in given DAT file
 			for(int i=0;i<datafile.getGames().size();i++){
 				Game current = datafile.getGames().get(i);
-				
-				// extract basename 1st
-				if(i==0){
-					// first one only
-					lastBaseName = this.getBaseName(current.getName());
-					mergedGame = this.cloneCoreGame(current, lastBaseName, mergeFilter);
-				}else{
-					currentBaseName = this.getBaseName(current.getName());
-				}
-				
-				if(!StringUtil.isEmpty(currentBaseName)){
-					if(lastBaseName.equals(currentBaseName)){
-					//	System.out.println("match for: '" + lastBaseName + "'");
-						if(mergeFilter != null){
-							// filter? check if this version is wanted at all
-							mergedGame.getRoms().addAll(this.getFilteredRoms(mergeFilter, current.getRoms()));
-						}else{
-							// no filter? take all
-							mergedGame.getRoms().addAll(current.getRoms());
-						}
-					}else{
-						if(!mergedGame.getRoms().isEmpty()){
-							
-							// check if a previous game is existent with current basename (for unsorted datfiles)
-							Game oldMergedGame = result.getGameByName(mergedGame.getName());
-							if(oldMergedGame != null) {
-								result.getGames().remove(oldMergedGame);
-								oldMergedGame.getRoms().addAll(mergedGame.getRoms());
-								mergedGame = oldMergedGame;
-							} else {
-								// seems to be a new game set
-								result.getGames().add(mergedGame);
-							}
-						}
-						
-						// make current game the new mergedGame
-						lastBaseName = currentBaseName;
-						mergedGame = this.cloneCoreGame(current, currentBaseName, mergeFilter);
-					}
-				}
-				
-			}
-			
-			// make sure the last game is added to the merged list - if it has any roms...
-			if(mergedGame.getRoms().size() > 0 && !result.getGames().contains(mergedGame)){
-				result.getGames().add(mergedGame);
+				String baseName = this.getBaseName(current.getName());
+				Game mergedGame = this.cloneCoreGame(current, baseName, mergeFilter);
+				result.mergeGame(mergedGame, baseName);
 			}
 		}
-		
+
 		return result;
 	}
 

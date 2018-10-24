@@ -107,6 +107,8 @@ public class RomSetMerger {
 				return name.substring(0, revPartIndex);
 			} else if(detailPartIndex > -1){
 				return name.substring(0, detailPartIndex);
+			} else {
+				return name;
 			}
 		}
 		return "";

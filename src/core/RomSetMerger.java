@@ -105,12 +105,11 @@ public class RomSetMerger {
 			int detailPartIndex = name.indexOf(" (");
 			if(revPartIndex >= 0 && revPartIndex < detailPartIndex) {
 				return name.substring(0, revPartIndex);
-			}else {
+			} else if(detailPartIndex > -1){
 				return name.substring(0, detailPartIndex);
 			}
-		}else{
-			return "";
 		}
+		return "";
 	}
 	
 	/**

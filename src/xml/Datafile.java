@@ -30,10 +30,16 @@ public class Datafile implements XmlFile{
 	@ElementList(inline=true,required=false, name="game")
 	private List<Game> games = new ArrayList<>();
 	
+	/**
+	 * Searches for game in {@link #games} with matching name. (ignoring case)
+	 * @param name
+	 * @return
+	 */
 	private Game getGameByName(String name) {
 		if(name != null && name.length() > 0) {
+			String lowerCaseSearchName = name.toLowerCase();
 			for(Game game : this.games) {
-				if(game.getName().equals(name)) {
+				if(lowerCaseSearchName.equals(game.getName().toLowerCase())) {
 					return game;
 				}
 			}

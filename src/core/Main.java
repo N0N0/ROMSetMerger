@@ -16,7 +16,7 @@ public class Main {
 
 	public static void main(String args[]){
 		
-		System.out.println("ROMSetMerger v0.22\n");
+		System.out.println("ROMSetMerger v0.23\n");
 		
 		CommandLineParser parser = new DefaultParser();
 		try {
